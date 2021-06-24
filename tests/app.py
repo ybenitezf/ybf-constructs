@@ -34,7 +34,7 @@ class ProbeStack(Stack):
             domain_name=os.getenv("ZONE_DOMAIN_NAME")
         )
 
-        site = SiteDeploy(
+        SiteDeploy(
             self, 'MyTestSite',
             sources=[s3deploy.Source.asset("./holder")],
             certificate=cert,
