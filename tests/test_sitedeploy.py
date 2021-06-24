@@ -1,6 +1,7 @@
 import requests
 import pytest as pt
 
+
 @pt.mark.parametrize(
     'url,status', [
         ('https://testsitedeployment.datwit.com', 200),
