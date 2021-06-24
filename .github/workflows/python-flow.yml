@@ -51,5 +51,5 @@ jobs:
       run: |
         cd tests && cdk deploy --require-approval never && cd ..
         make test
-        cd tests && cdk destroy --require-approval never && cd ..
+        cd tests && cdk destroy -f && cd ..
 
