@@ -1,0 +1,33 @@
+name: Build python package
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Install dependencies
+      run: |
+        npm install -g aws-cdk@next
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
+    - name: Build package
+      run: |
+        make dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: distribution-python
+        path: dist/
+        retention-days: 1
