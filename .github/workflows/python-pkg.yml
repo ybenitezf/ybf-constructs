@@ -1,51 +1,17 @@
-name: Python package
+name: Build python package
 
 on:
-  pull_request:
-    branches: [ main ]
+  push:
+    tags:
+      - '*'
 
 jobs:
-  testing:
-    runs-on: ubuntu-latest
-    env:
-      CDK_DEFAULT_REGION: eu-west-1
-      ZONE_DOMAIN_NAME: 'datwit.com'
-      TEST_HOST_NAME: 'testsitedeployment.datwit.com'
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
-    - name: Install dependencies
-      run: |
-        npm install -g aws-cdk@next
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements.txt
-        make dev
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 YbfConstructs  tests --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 YbfConstructs  tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   build:
-    needs: testing
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
