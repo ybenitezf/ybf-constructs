@@ -24,11 +24,17 @@ class SiteDeploy(Construct):
             route53_zone: rt53.IHostedZone,
             bucket_name: typing.Optional[str] = None,
             prune_bucket: typing.Optional[bool] = False,
-            root_object: typing.Optional[str] = 'index.html') -> None:
+            root_object: typing.Optional[str] = 'index.html',
+            website_error_document: typing.Optional[str] = '404.html'
+            ) -> None:
         super().__init__(scope, id)
 
         if bucket_name is None:
-            pkgBucket = s3.Bucket(self, "SiteBucket")
+            pkgBucket = s3.Bucket(
+                self, "SiteBucket",
+                public_read_access=True,
+                website_error_document="404.html",
+                website_index_document=root_object)
         else:
             pkgBucket = s3.Bucket.from_bucket_name(
                 self, "SiteBucket", bucket_name)
