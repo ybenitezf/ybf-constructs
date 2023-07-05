@@ -33,6 +33,12 @@ class SiteDeploy(Construct):
             pkgBucket = s3.Bucket(
                 self, "SiteBucket",
                 public_read_access=True,
+                block_public_access = s3.BlockPublicAccess(
+                    block_public_acls=False,
+                    ignore_public_acls=False,
+                    block_public_policy=False,
+                    restrict_public_buckets=False,
+                ),
                 website_error_document="404.html",
                 website_index_document=root_object)
         else:
