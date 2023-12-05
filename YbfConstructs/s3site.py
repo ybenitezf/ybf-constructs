@@ -110,4 +110,5 @@ class StaticHTMLSiteDeploy(SiteDeploy):
             cache_control=[
                 s3deploy.CacheControl.max_age(Duration.days(0)),
             ],
+            content_type="text/html",
         )
