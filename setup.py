@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='ybf-constructs',
-    version='0.0.2',
+    version='0.0.7',
     url='https://github.com/ybenitezf/s3site',
     license='GPL',
     author='Yoel Benítez Fonseca',
